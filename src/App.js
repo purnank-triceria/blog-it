@@ -5,11 +5,13 @@ import Home from './pages/Home';
 
 const theme = createMuiTheme({
   breakpoints: {
-    xs: 321
-    , sm: 481
-    , md: 769
-    , lg: 1025
-    , xl: 1281
+    values: {
+      xs: 321
+      , sm: 481
+      , md: 769
+      , lg: 1025
+      , xl: 1281
+    }
   }
 })
 
