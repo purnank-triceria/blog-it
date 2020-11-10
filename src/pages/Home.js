@@ -1,4 +1,5 @@
-import react from 'react'
+import React from 'react'
+import withNavbar from './../hoc/Navbar';
 
 const Home = () => {
   return (
@@ -8,4 +9,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default withNavbar(Home)
