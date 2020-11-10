@@ -1,5 +1,7 @@
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import './App.css';
+import Home from './pages/Home';
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -14,9 +16,10 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        Hello World
-      </div>
+      <BrowserRouter>
+        <Route exact path='/' component={Home} />
+        <Route path='/' render={() => <Redirect to='/' />} />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
