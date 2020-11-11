@@ -8,8 +8,8 @@ const Posts = () => {
   const location = useLocation()
   const role = location.state?.role || 'user'
   const renderPosts = POSTS.map((post) =>
-    <Grid item sm={12} md={6} lg={4}>
-      <PostCard title={post.title} content={post.content} image={post.image} role={role} />
+    <Grid item sm={12} md={6} lg={4} key={post.id}>
+      <PostCard id={post.id} title={post.title} content={post.content} image={post.image} role={role} />
     </Grid>
   )
   return (
