@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 import React from 'react'
 import LogoImg from '../../images/logo.png'
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   main: {
@@ -16,9 +17,13 @@ const useStyles = makeStyles(() => ({
 
 const Logo = () => {
   const classes = useStyles()
+  const history = useHistory()
+  const handleClick = () => {
+    history.push('/')
+  }
   return (
-    <div className={classes.main}>
-      <img src={LogoImg} />
+    <div className={classes.main} onClick={handleClick}>
+      <img src={LogoImg} alt="BlogIt" />
     </div>
   )
 }
