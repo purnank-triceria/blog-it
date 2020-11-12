@@ -79,7 +79,6 @@ const PostImage = ({ image, style, editable }) => {
       </div>
     </div>
   )
-  console.log({ file });
   return <>{editable ? editableImage : defaultImage}</>
 }
 
