@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { POSTS } from '../data/posts'
 import withNavbar from '../hoc/Navbar'
+import withEditableText from '../hoc/withEditable'
 
 const useStyles = makeStyles(() => ({
   imageBox: {
@@ -45,13 +46,6 @@ const useStyles = makeStyles(() => ({
     , borderRadius: '50px'
     , padding: '10px'
   }
-  , titleInput: {
-    height: '32px'
-    , marginTop: '20px'
-    , marginBottom: '20px'
-    , width: '100%'
-    , resize: 'none'
-  }
 }))
 
 const PostImage = ({ image, style, editable }) => {
@@ -82,25 +76,13 @@ const PostImage = ({ image, style, editable }) => {
   return <>{editable ? editableImage : defaultImage}</>
 }
 
-const PostTitle = ({ title, editable }) => {
-  const classes = useStyles()
-  const [postTitle, setTitle] = useState(null)
-  const [editing, setEditing] = useState(false)
-  const handleEditing = () => {
-    setEditing(!editing)
-  }
-  const disableEditing = () => {
-    setEditing(false)
-  }
-  const handleEdit = (e) => {
-    const {target} = e
-    setTitle(target.value)
-  }
-  const defaultRender = (<h2 onClick={handleEditing}>{postTitle || title}</h2>)
-  const editableRender = (<textarea type="text" value={postTitle || title} onChange={handleEdit} className={classes.titleInput} onBlur={disableEditing} />)
-  return (<>{editable && editing ? editableRender : defaultRender}</>)
+const PostTitle = ({ text, onClick }) => {
+  return (<h2 onClick={onClick || (() => { })}>{text}</h2>)
 }
 
+const PostContent = ({ text, onClick }) => {
+  return (<div onClick={onClick || (() => { })}>{text}</div>)
+}
 
 const Post = () => {
   const params = useParams()
@@ -109,13 +91,15 @@ const Post = () => {
   const location = useLocation()
   const editable = location.state.role && location.state.role === 'admin'
   const { title, content, image } = post
+  const EditablePostTitle = withEditableText(PostTitle)
+  const EditablePostContent = withEditableText(PostContent)
   return (
     <Grid container>
       <Grid item md={2} />
       <Grid item md={8}>
         <PostImage image={image} style={{ marginTop: '30px', }} editable={editable} />
-        <PostTitle title={title} editable={editable} />
-        <div>{content}</div>
+        {editable ? <EditablePostTitle text={title} /> : <PostTitle text={title} />}
+        {editable ? <EditablePostContent text={content} /> : <PostContent text={content} />}
       </Grid>
       <Grid item md={2} />
     </Grid>
