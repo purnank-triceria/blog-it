@@ -45,6 +45,13 @@ const useStyles = makeStyles(() => ({
     , borderRadius: '50px'
     , padding: '10px'
   }
+  , titleInput: {
+    height: '32px'
+    , marginTop: '20px'
+    , marginBottom: '20px'
+    , width: '100%'
+    , resize: 'none'
+  }
 }))
 
 const PostImage = ({ image, style, editable }) => {
@@ -76,6 +83,25 @@ const PostImage = ({ image, style, editable }) => {
   return <>{editable ? editableImage : defaultImage}</>
 }
 
+const PostTitle = ({ title, editable }) => {
+  const classes = useStyles()
+  const [postTitle, setTitle] = useState(null)
+  const [editing, setEditing] = useState(false)
+  const handleEditing = () => {
+    setEditing(!editing)
+  }
+  const disableEditing = () => {
+    setEditing(false)
+  }
+  const handleEdit = (e) => {
+    const {target} = e
+    setTitle(target.value)
+  }
+  const defaultRender = (<h2 onClick={handleEditing}>{postTitle || title}</h2>)
+  const editableRender = (<textarea type="text" value={postTitle || title} onChange={handleEdit} className={classes.titleInput} onBlur={disableEditing} />)
+  return (<>{editable && editing ? editableRender : defaultRender}</>)
+}
+
 
 const Post = () => {
   const params = useParams()
@@ -89,7 +115,7 @@ const Post = () => {
       <Grid item md={2} />
       <Grid item md={8}>
         <PostImage image={image} style={{ marginTop: '30px', }} editable={editable} />
-        <h2>{title}</h2>
+        <PostTitle title={title} editable={editable} />
         <div>{content}</div>
       </Grid>
       <Grid item md={2} />
