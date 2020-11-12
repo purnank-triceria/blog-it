@@ -43,9 +43,6 @@ const PostCard = ({ id, title, content, image, role }) => {
         <Grid container>
           <Grid item xs />
           <Grid item xs={1}>
-            <Edit />
-          </Grid>
-          <Grid item xs={1}>
             <Delete />
           </Grid>
         </Grid>
